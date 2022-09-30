@@ -1,0 +1,203 @@
+{% extends "base.html" %} {% block content %}
+
+<!-- Dashboard for busines details in bootstrap template-->
+<main id="main" class="main">
+
+
+    <div class="pagetitle">
+        <h1><i class="ri-customer-service-2-fill"></i> </h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item ">Detail</li>
+                <li class="breadcrumb-item active">{{busines.name}}</li>
+
+            </ol>
+            {% if favorite %}
+            <a href="{% url 'favorite' busines.id %}">
+                <button type="button" class="btn btn-secondary m-2"><i class="ri-heart-fill"></i></button>
+
+            </a>
+            {% else %}
+            <a href="{% url 'favorite' busines.id %}">
+                <button type="button" class="btn btn-secondary m-2"><i class="ri-heart-add-line"></i></button>
+            </a>
+            {% endif %}
+
+            <a href="http://127.0.0.1:8000/admin/Main/busines/{{busines.id}}/change/" target="_blank">
+                <button type="button" class="btn btn-secondary m-2"><i class="bx bxs-edit"></i></button>
+
+            </a>
+        </nav>
+    </div>
+    <!-- End Page Title -->
+
+
+    <section class="section profile">
+
+        <div class="col-sm-12 ">
+
+            <div class="card">
+
+
+
+                <div class="card-body profile-card pt-4 d-flex flex-column align-items-center ">
+                    {% if busines.featured_image %}
+                    <img src="{{busines.featured_image}} " alt="Profile " class=" "> {% endif %}
+                    <h2>{{busines.name}}</h2>
+                    <h3>{{busines.categories}}</h3>
+                    {% if busines.website %}
+                    <div class="social-links mt-2 ">
+                        <a href="{{busines.website}} " class="twitter " target="_blank "><i class="ri-earth-fill "></i></a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-xl-12">
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Details</h5>
+
+                    <!-- Default Tabs -->
+                    <ul class="nav nav-tabs d-flex" id="myTabjustified" role="tablist">
+                        <li class="nav-item flex-fill" role="presentation">
+                            <button class="nav-link w-100 active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-justified" type="button" role="tab" aria-controls="home" aria-selected="true">Busines Information</button>
+                        </li>
+                        <li class="nav-item flex-fill" role="presentation">
+                            <button class="nav-link w-100" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-justified" type="button" role="tab" aria-controls="profile" aria-selected="false" tabindex="-1">Rating</button>
+                        </li>
+                        <li class="nav-item flex-fill" role="presentation">
+                            <button class="nav-link w-100" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-justified" type="button" role="tab" aria-controls="contact" aria-selected="false" tabindex="-1">Location</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content pt-2  profile-overview" id="myTabjustifiedContent">
+                        <div class="tab-pane fade active show" id="home-justified" role="tabpanel" aria-labelledby="home-tab">
+                            <!-- name categories status phone phones website domain opening_hours date_added -->
+                            <div class="row m-2">
+                                <div class="col-lg-3 col-md-4 label ">Name</div>
+                                <div class="col-lg-9 col-md-8">{{busines.name}}</div>
+                            </div>
+                            <div class="row m-2">
+                                <div class="col-lg-3 col-md-4 label ">Categories</div>
+                                <div class="col-lg-9 col-md-8">{{busines.categories}}</div>
+                            </div>
+                            <div class="row m-2">
+                                <div class="col-lg-3 col-md-4 label ">Status</div>
+                                <div class="col-lg-9 col-md-8">
+                                    <form action="{% url 'status' busines.id %}" method="POST">
+                                        {% csrf_token %}
+                                        <select name="status" id="status" class="form-select" onchange="this.form.submit()">
+                                            <option selected="">{{busines.get_status_display}}</option>
+                                            <option value="0">New</option>
+                                            <option value="1">Onhold</option>
+                                            <option value="2">In Progress</option>
+                                            <option value="3">Completed</option>
+                                            <option value="4">Canceled</option>
+                                            <option value="5">Rejected</option>
+                                            <option value="6">Accepted</option>
+                                            <option value="7">No Rsponse</option>
+                                        </select>
+                                        <noscript><input type="submit" value="Submit"></noscript>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="row m-2">
+                                <div class="col-lg-3 col-md-4 label ">Phone</div>
+                                <div class="col-lg-9 col-md-8">{{busines.phone}}</div>
+                            </div>
+                            <div class="row m-2">
+                                <div class="col-lg-3 col-md-4 label ">Other Phones</div>
+                                <div class="col-lg-9 col-md-8">{{busines.phones}}</div>
+                            </div>
+                            <div class="row m-2">
+                                <div class="col-lg-3 col-md-4 label ">Website</div>
+                                <div class="col-lg-9 col-md-8">{{busines.website}}</div>
+                            </div>
+                            <div class="row m-2">
+                                <div class="col-lg-3 col-md-4 label ">Domain</div>
+                                <div class="col-lg-9 col-md-8">{{busines.domain}}</div>
+                            </div>
+                            <div class="row m-2">
+                                <div class="col-lg-3 col-md-4 label ">Opening Hours</div>
+                                <div class="col-lg-9 col-md-8">{{busines.opening_hours}}</div>
+                            </div>
+                            <div class="row m-2">
+                                <div class="col-lg-3 col-md-4 label ">Date Added</div>
+                                <div class="col-lg-9 col-md-8">{{busines.date_added}}</div>
+                            </div>
+
+                        </div>
+                        <div class="tab-pane fade profile-overview" id="profile-justified" role="tabpanel" aria-labelledby="profile-tab">
+                            <!-- review_count average_rating review_url -->
+                            <div class="row m-2">
+                                <div class="col-lg-3 col-md-4 label ">Review Count</div>
+                                <div class="col-lg-9 col-md-8">{{busines.review_count}}</div>
+                            </div>
+                            <div class="row m-2">
+                                <div class="col-lg-3 col-md-4 label ">Average Rating</div>
+                                <div class="col-lg-9 col-md-8">{{busines.average_rating}}</div>
+                            </div>
+                            <div class="row m-2">
+                                <div class="col-lg-3 col-md-4 label ">Review Url</div>
+                                <div class="col-lg-9 col-md-8">{{busines.review_url}}</div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade profile-overview" id="contact-justified" role="tabpanel" aria-labelledby="contact-tab">
+                            <!-- fulladdress street municipality   google_maps_url latitude longitude -->
+                            <div class="row m-2">
+                                <div class="col-lg-3 col-md-4 label ">Full Address</div>
+                                <div class="col-lg-9 col-md-8">{{busines.fulladdress}}</div>
+                            </div>
+                            <div class="row m-2">
+                                <div class="col-lg-3 col-md-4 label ">Street</div>
+                                <div class="col-lg-9 col-md-8">{{busines.street}}</div>
+                            </div>
+                            <div class="row m-2">
+                                <div class="col-lg-3 col-md-4 label ">Municipality</div>
+                                <div class="col-lg-9 col-md-8">{{busines.municipality}}</div>
+                            </div>
+                            <div class="row m-2">
+                                <div class="col-lg-3 col-md-4 label ">Google Maps Url</div>
+                                <div class="col-lg-9 col-md-8">{{busines.google_maps_url}}</div>
+                            </div>
+                            <div class="row m-2">
+                                <div class="col-lg-3 col-md-4 label ">Latitude</div>
+                                <div class="col-lg-9 col-md-8">{{busines.latitude}}</div>
+                            </div>
+                            <div class="row m-2">
+                                <div class="col-lg-3 col-md-4 label ">Longitude</div>
+                                <div class="col-lg-9 col-md-8">{{busines.longitude}}</div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- End Default Tabs -->
+
+                </div>
+            </div>
+
+        </div>
+        </div>
+    </section>
+
+
+    <center>
+        {% if pagination.previous %}
+        <a href="{% url 'detail' pagination.previous %}">
+            <button type="button" class="btn btn-secondary m-2"><i class="bx bx-skip-previous"></i></button>
+        </a>
+        {% endif %} {% if pagination.next %}
+        <a href="{% url 'detail' pagination.next %}">
+            <button type="button" class="btn btn-secondary m-2"><i class="bx bx-skip-next"></i></button>
+        </a>
+        {% endif %}
+    </center>
+
+</main>
+
+
+{% endblock %}
