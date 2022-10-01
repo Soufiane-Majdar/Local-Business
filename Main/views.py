@@ -96,8 +96,9 @@ def home(request):
     status="<script> document.addEventListener('DOMContentLoaded', () => { echarts.init(document.querySelector('#trafficChart')).setOption({ tooltip: {  trigger: 'item' }, legend: {top: '5%',left: 'center'}, series: [{name: 'Statu :', type: 'pie',radius: ['40%', '70%'], avoidLabelOverlap: false,label: {  show: false,   position: 'center' },emphasis: { label: { show: true,fontSize: '18',fontWeight: 'bold'}},labelLine: {show: false}, data: "+status+"}]});}); </script>"
     
     favorites = Favorite.objects.all()
+    nbr_favorite = favorites.count()
 
-    context = {'title': 'Home','business':business,'status':status,'favorites':favorites,'nbr_business':nbr_business}
+    context = {'title': 'Home','business':business,'status':status,'favorites':favorites,'nbr_business':nbr_business,'nbr_favorite':nbr_favorite}
     return render(request, 'home.html', context)
 
 def detail(request, id):

@@ -376,7 +376,7 @@ div.table-responsive>div.dataTables_wrapper>div.row {
     margin: 0
 }
 
-div.table-responsive>div.dataTables_wrapper>div.row>div[class^=col-]:first-child {
+bg div.table-responsive>div.dataTables_wrapper>div.row>div[class^=col-]:first-child {
     padding-left: 0
 }
 
