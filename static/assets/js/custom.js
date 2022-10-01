@@ -29,3 +29,15 @@ $(document).ready(function() {
         return false;
     });
 });
+
+function go_detail(element) {
+
+    if ($(element).attr('href')) {
+
+        window.open($(element).attr('href'), '_blank');
+
+    }
+
+    return false;
+
+}

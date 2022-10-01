@@ -145,13 +145,9 @@
 
                                         <tbody class="table-light table-group-divider align-middle ">
                                             {% for busines in business%}
-                                            <tr href="{% url 'detail' busines.id %}">
+                                            <tr onclick="go_detail(this);" href="{% url 'detail' busines.id %}">
 
-                                                <th scope="col ">
-                                                    <a href="{% url 'detail' busines.id %}" target="_blank">
-                                                    {{ busines.name }}
-                                                    </a>
-                                                </th>
+                                                <th scope="col">{{ busines.name }}</th>
                                                 <td>{{ busines.categories }}</td>
                                                 <td>{{ busines.review_count }}</td>
                                                 <td>{{ busines.average_rating }} </td>
