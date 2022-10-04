@@ -1,37 +1,56 @@
-{% load static %}
+{% load static %} 
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>{{title}} </title>
-    <meta content="" name="description">
-    <meta content="Author" name="MJ Soufiane">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>{{title}}</title>
+    <meta content="" name="description" />
+    <meta content="Author" name="MJ Soufiane" />
 
     <!-- Favicons -->
-    <link href="/static/asset/img/favicon.png" rel="icon">
-    <link href="/static/asset/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <link href="/static/asset/img/favicon.png" rel="icon" />
+    <link
+      href="/static/asset/img/apple-touch-icon.png"
+      rel="apple-touch-icon"
+    />
 
     <!-- Google Fonts -->
-    <link href="https://fonts.gstatic.com" rel="preconnect">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+    <link href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+      rel="stylesheet"
+    />
 
     <!-- Vendor CSS Files -->
-    <link href="/static/asset/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/static/asset/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="/static/asset/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-    <link href="/static/asset/vendor/quill/quill.snow.css" rel="stylesheet">
-    <link href="/static/asset/vendor/quill/quill.bubble.css" rel="stylesheet">
-    <link href="/static/asset/vendor/remixicon/remixicon.css" rel="stylesheet">
-    <link href="/static/asset/vendor/simple-datatables/style.css" rel="stylesheet">
+    <link
+      href="/static/asset/vendor/bootstrap/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="/static/asset/vendor/bootstrap-icons/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link
+      href="/static/asset/vendor/boxicons/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link href="/static/asset/vendor/quill/quill.snow.css" rel="stylesheet" />
+    <link href="/static/asset/vendor/quill/quill.bubble.css" rel="stylesheet" />
+    <link
+      href="/static/asset/vendor/remixicon/remixicon.css"
+      rel="stylesheet"
+    />
+    <link
+      href="/static/asset/vendor/simple-datatables/style.css"
+      rel="stylesheet"
+    />
 
     <!-- Template Main CSS File -->
-    <link href="/static/asset/css/style.css" rel="stylesheet">
+    <link href="/static/asset/css/style.css" rel="stylesheet" />
     <!-- <link rel="stylesheet" href="/static/asset/css/bootstrap.min.css"> -->
-    <link rel="stylesheet" href="/static/asset/css/datatables.min.css">
+    <link rel="stylesheet" href="/static/asset/css/datatables.min.css" />
     <!-- <link rel="stylesheet" href="/static/asset/css/style.css"> -->
-
 
     <!-- Load the tag library  -->
     {% load bootstrap5 %}
@@ -41,118 +60,100 @@
 
     <!-- Display django.contrib.messages as Bootstrap alerts  -->
     {% bootstrap_messages %}
+  </head>
 
-
-
-</head>
-
-
-<body>
-
+  <body>
     <!-- ======= Header ======= -->
     <header id="header" class="header fixed-top d-flex align-items-center">
+      <div class="d-flex align-items-center justify-content-between">
+        <a href="/" class="logo d-flex align-items-center">
+          <img src="/static/asset/img/logo.png" alt="" />
+          <span class="d-none d-lg-block">Business Management</span>
+        </a>
+      </div>
+      <!-- End Logo -->
 
-        <div class="d-flex align-items-center justify-content-between">
-            <a href="/" class="logo d-flex align-items-center">
-                <img src="/static/asset/img/logo.png" alt="">
-                <span class="d-none d-lg-block">Business Management</span>
-            </a>
-        </div>
-        <!-- End Logo -->
-
-
-        <nav class="header-nav ms-auto">
-            <ul class="d-flex align-items-center me-5">
-
-                <i class="bi bi-list toggle-sidebar-btn"></i>
-
-
-
-
-
-            </ul>
-        </nav>
-        <!-- End Icons Navigation -->
-
+      <nav class="header-nav ms-auto">
+        <ul class="d-flex align-items-center me-5">
+          <i class="bi bi-list toggle-sidebar-btn"></i>
+        </ul>
+      </nav>
+      <!-- End Icons Navigation -->
     </header>
 
     <!-- ======= Sidebar ======= -->
     <aside id="sidebar" class="sidebar">
+      <ul class="sidebar-nav" id="sidebar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="">
+            <i class="bi bi-grid"></i>
+            <span>{{title}}</span>
+          </a>
+        </li>
+        <!-- End Dashboard Nav -->
 
-        <ul class="sidebar-nav" id="sidebar-nav">
+        <li class="nav-heading">Pages</li>
 
-            <li class="nav-item">
-                <a class="nav-link " href="">
-                    <i class="bi bi-grid"></i>
-                    <span>{{title}}</span>
-                </a>
-            </li>
-            <!-- End Dashboard Nav -->
+        {% if user.is_authenticated %}
 
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="/">
+            <i class="bx bxs-dashboard"></i>
+            <span>Home</span>
+          </a>
+        </li>
+        <!-- End Home Page Nav -->
 
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="{% url 'upload_csv' %}">
+            <i class="bx bx-upload"></i>
+            <span>Add Business</span>
+          </a>
+        </li>
+        <!-- End Home Page Nav -->
 
-
-            <li class="nav-heading">Pages</li>
-
-            {% if user.is_authenticated %}
-
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="/">
-                    <i class="bx bxs-dashboard"></i>
-                    <span>Home</span>
-                </a>
-            </li>
-            <!-- End Home Page Nav -->
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="{% url 'upload_csv' %}">
-                    <i class="bx bx-upload"></i>
-                    <span>Add Business</span>
-                </a>
-            </li>
-            <!-- End Home Page Nav -->
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="{% url 'logout' %}">
-                    <i class="bi bi-box-arrow-in-right"></i>
-                    <span>Logout</span>
-                </a>
-            </li>
-            {% else %}
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="{% url 'login' %}">
-                    <i class="bi bi-box-arrow-in-right"></i>
-                    <span>Login</span>
-                </a>
-            </li>
-            {% endif %}
-            <!-- End Login Page Nav -->
-
-
-
-
-        </ul>
-
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="{% url 'logout' %}">
+            <i class="bi bi-box-arrow-in-right"></i>
+            <span>Logout</span>
+          </a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="{% url 'login' %}">
+            <i class="bi bi-box-arrow-in-right"></i>
+            <span>Login</span>
+          </a>
+        </li>
+        {% endif %}
+        <!-- End Login Page Nav -->
+      </ul>
     </aside>
 
     {% block content %} {% endblock %}
 
     <!-- ======= Footer ======= -->
     <footer id="footer" class="footer">
-        <div class="copyright">
-            © Copyright <strong><span>Dev Media</span></strong>. All Rights Reserved
-        </div>
-        <div class="credits">
-            Designed by <a href="https://github.com/Soufiane-Majdar" target="_blank"> Soufiane Majdar <i class="bx bxl-github"></i></a>
-        </div>
+      <div class="copyright">
+        © Copyright <strong><span>Dev Media</span></strong
+        >. All Rights Reserved
+      </div>
+      <div class="credits">
+        Designed by
+        <a href="https://github.com/Soufiane-Majdar" target="_blank">
+          Soufiane Majdar <i class="bx bxl-github"></i
+        ></a>
+      </div>
     </footer>
     <!-- End Footer -->
 
-    <a href="#" class="back-to-top d-flex align-items-center justify-content-center active"><i class="bi bi-arrow-up-short"></i></a>
+    <a
+      href="#"
+      class="back-to-top d-flex align-items-center justify-content-center active"
+      ><i class="bi bi-arrow-up-short"></i
+    ></a>
 
     <!-- ============ Java Script Files  ================== -->
-
 
     <!-- <script src="/static/asset/js/bootstrap.bundle.min.js"></script> -->
     <script src="/static/asset/js/jquery-3.6.0.min.js"></script>
@@ -160,7 +161,6 @@
     <!-- <script src="/static/asset/js/pdfmake.min.js"></script> -->
     <!-- <script src="/static/asset/js/vfs_fonts.js"></script> -->
     <script src="/static/asset/js/custom.js"></script>
-
 
     <!-- Vendor JS Files -->
     <script src="/static/asset/vendor/apexcharts/apexcharts.min.js"></script>
@@ -174,7 +174,5 @@
 
     <!-- Template Main JS File -->
     <script src="/static/asset/js/main.js"></script>
-
-</body>
-
+  </body>
 </html>

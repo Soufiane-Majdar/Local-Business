@@ -1,157 +1,113 @@
 {% extends "base.html" %} {% block content %}
 
-
 <main id="main" class="main">
+  <div class="pagetitle">
+    <h1>Dashboard</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item active">Dashboard</li>
+      </ol>
+    </nav>
+  </div>
+  <!-- End Page Title -->
 
+  <section class="section dashboard">
+    <div class="row">
+      <div class="col-12">
+        <div class="card top-selling overflow-auto">
+          <div class="card-body pb-0">
+            <h5 class="card-title">
+              Favorites <span>| {{nbr_favorite}}</span>
+            </h5>
 
-    <div class="pagetitle">
-        <h1>Dashboard</h1>
-        <nav>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/">Home</a></li>
-                <li class="breadcrumb-item active">Dashboard</li>
-            </ol>
-        </nav>
-    </div>
-    <!-- End Page Title -->
+            <table class="table table-borderless table-hover">
+              <thead>
+                <tr>
+                  <th scope="col">Image</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Statu</th>
+                  <th scope="col">Website</th>
+                  <th scope="col">Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for favorite in favorites %}
+                <tr href="{% url 'detail' favorite.busines.id %}">
+                  <th scope="row">
+                    <img
+                      src="{{favorite.busines.featured_image}}"
+                      alt="No image"
+                    />
+                  </th>
+                  <td class="text-primary fw-bold">
+                    {{ favorite.busines.name }}
+                  </td>
+                  {% if favorite.busines.status == 0 %}
+                  <td><span class="badge bg-black">New</span></td>
+                  {% elif favorite.busines.status == 1 %}
+                  <td><span class="badge bg-info">Onhold</span></td>
+                  {% elif favorite.busines.status == 2 %}
+                  <td><span class="badge bg-info">In Progress</span></td>
+                  {% elif favorite.busines.status == 3 %}
+                  <td><span class="badge bg-success">Completed</span></td>
+                  {% elif favorite.busines.status == 4 %}
+                  <td><span class="badge bg-danger">Canceled</span></td>
+                  {% elif favorite.busines.status == 5 %}
+                  <td><span class="badge bg-danger">Rejected</span></td>
+                  {% elif favorite.busines.status == 6 %}
+                  <td><span class="badge bg-primary">Accepted</span></td>
+                  {% elif favorite.busines.status == 7 %}
+                  <td><span class="badge bg-warning">No Response</span></td>
+                  {% endif %}
 
-    <section class="section dashboard">
+                  <td class="fw-bold">{{ favorite.busines.website }}</td>
+                  <td>{{ favorite.date_added }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Left side columns -->
+      <div class="col-lg-8">
         <div class="row">
-            <div class="col-12">
-                <div class="card top-selling overflow-auto">
+          <!-- Recent Sales -->
+          <div class="col-12">
+            <div class="card recent-sales overflow-auto">
+              <div class="card-body">
+                <h5 class="card-title">
+                  Local Business <span>| {{nbr_business}}</span>
+                </h5>
 
+                <div class="table-responsive-sm">
+                  <table
+                    id="example"
+                    class="table table-borderless datatable dataTable-table table-hover"
+                  >
+                    <thead class="table-dark">
+                      <tr class="text-nowrap">
+                        <th scope="col">Name</th>
+                        <th scope="col">Categories</th>
+                        <th scope="col">Reviews</th>
+                        <th scope="col">Rating</th>
+                        <th scope="col">status</th>
+                      </tr>
+                    </thead>
 
-
-                    <div class="card-body pb-0">
-                        <h5 class="card-title">Favorites <span>| {{nbr_favorite}}</span></h5>
-
-                        <table class="table table-borderless table-hover">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Image</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Statu</th>
-                                    <th scope="col">Website</th>
-                                    <th scope="col">Date</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for favorite in favorites %}
-                                <tr href="{% url 'detail' favorite.busines.id %}">
-                                    <th scope="row">
-                                        <img src="{{favorite.busines.featured_image}}" alt="No image">
-                                    </th>
-                                    <td class="text-primary fw-bold">{{ favorite.busines.name }}</td>
-                                    {% if favorite.busines.status == 0 %}
-                                    <td><span class="badge bg-black">New</span></td>
-                                    {% elif favorite.busines.status == 1 %}
-                                    <td><span class="badge bg-info">Onhold</span></td>
-                                    {% elif favorite.busines.status == 2 %}
-                                    <td><span class="badge bg-info">In Progress</span></td>
-                                    {% elif favorite.busines.status == 3 %}
-                                    <td><span class="badge bg-success">Completed</span></td>
-                                    {% elif favorite.busines.status == 4 %}
-                                    <td><span class="badge bg-danger">Canceled</span></td>
-                                    {% elif favorite.busines.status == 5 %}
-                                    <td><span class="badge bg-danger">Rejected</span></td>
-                                    {% elif favorite.busines.status == 6 %}
-                                    <td><span class="badge bg-primary">Accepted</span></td>
-                                    {% elif favorite.busines.status == 7 %}
-                                    <td><span class="badge bg-warning">No Response</span></td>
-                                    {% endif %}
-
-                                    <td class="fw-bold">{{ favorite.busines.website }}</td>
-                                    <td>{{ favorite.date_added }}</td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-
-                    </div>
-
-                </div>
-            </div>
-
-            <!-- Right side columns -->
-            <div class="col-lg-4">
-
-
-
-                <!-- Website Traffic -->
-                <div class="card">
-
-
-                    <div class="card-body pb-0">
-                        <h5 class="card-title">Business Status </h5>
-
-                        <div id="trafficChart" style="min-height: 400px; user-select: none; position: relative;" class="echart" _echarts_instance_="ec_1664230250051">
-                            <div style="position: relative; width: 478px; height: 400px; padding: 0px; margin: 0px; border-width: 0px; cursor: default;"><canvas style="position: absolute; left: 0px; top: 0px; width: 478px; height: 400px; user-select: none; padding: 0px; margin: 0px; border-width: 0px;" data-zr-dom-id="zr_0" width="478" height="400"></canvas>
-                                <div style="position: absolute !important; visibility: hidden !important; padding: 0px !important; margin: 0px !important; border-width: 0px !important; user-select: none !important; width: 0px !important; height: 0px !important; inset: 0px auto auto 0px !important;"></div>
-                                <div style="position: absolute !important; visibility: hidden !important; padding: 0px !important; margin: 0px !important; border-width: 0px !important; user-select: none !important; width: 0px !important; height: 0px !important; inset: 0px 0px auto auto !important;"></div>
-                                <div style="position: absolute !important; visibility: hidden !important; padding: 0px !important; margin: 0px !important; border-width: 0px !important; user-select: none !important; width: 0px !important; height: 0px !important; inset: auto auto 0px 0px !important;"></div>
-                                <div style="position: absolute !important; visibility: hidden !important; padding: 0px !important; margin: 0px !important; border-width: 0px !important; user-select: none !important; width: 0px !important; height: 0px !important; inset: auto 0px 0px auto !important;"></div>
-                            </div>
-                            <div class="" style="position: absolute; display: block; border-style: solid; white-space: nowrap; z-index: 9999999; box-shadow: rgba(0, 0, 0, 0.2) 1px 2px 10px; transition: opacity 0.2s cubic-bezier(0.23, 1, 0.32, 1) 0s, visibility 0.2s cubic-bezier(0.23, 1, 0.32, 1) 0s, transform 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s; background-color: rgb(255, 255, 255); border-width: 1px; border-radius: 4px; color: rgb(102, 102, 102); font: 14px / 21px sans-serif; padding: 10px; top: 0px; left: 0px; transform: translate3d(127px, 188px, 0px); border-color: rgb(84, 112, 198); pointer-events: none; visibility: hidden; opacity: 0;">
-                                <div style="margin: 0px 0 0;line-height:1;">
-                                    <div style="font-size:14px;color:#666;font-weight:400;line-height:1;">Access From</div>
-                                    <div style="margin: 10px 0 0;line-height:1;">
-                                        <div style="margin: 0px 0 0;line-height:1;"><span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:#5470c6;"></span><span style="font-size:14px;color:#666;font-weight:400;margin-left:2px">Search Engine</span>
-                                            <span style="float:right;margin-left:20px;font-size:14px;color:#666;font-weight:900">1,048</span>
-                                            <div style="clear:both"></div>
-                                        </div>
-                                        <div style="clear:both"></div>
-                                    </div>
-                                    <div style="clear:both"></div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        {{ status | safe }}
-
-
-                    </div>
-                </div>
-                <!-- End Website Traffic -->
-
-
-            </div>
-
-            <!-- Left side columns -->
-            <div class="col-lg-8">
-                <div class="row">
-                    <!-- Recent Sales -->
-                    <div class="col-12">
-                        <div class="card recent-sales overflow-auto">
-
-
-
-                            <div class="card-body">
-                                <h5 class="card-title">Local Business <span>| {{nbr_business}}</span></h5>
-
-                                <div class="table-responsive-sm">
-
-                                    <table id="example" class="table table-borderless datatable dataTable-table table-hover">
-                                        <thead class="table-dark">
-                                            <tr class="text-nowrap">
-                                                <th scope="col">Name</th>
-                                                <th scope="col">Categories</th>
-                                                <th scope="col">Reviews</th>
-                                                <th scope="col">Rating</th>
-                                                <th scope="col">status</th>
-
-                                            </tr>
-                                        </thead>
-
-                                        <tbody class="table-light table-group-divider align-middle ">
-                                            {% for busines in business%}
-                                            <tr onclick="go_detail(this);" href="{% url 'detail' busines.id %}">
-
-                                                <th scope="col">{{ busines.name }}</th>
-                                                <td>{{ busines.categories }}</td>
-                                                <td>{{ busines.review_count }}</td>
-                                                <td>{{ busines.average_rating }} </td>
-                                                <!--
+                    <tbody class="table-light table-group-divider align-middle">
+                      {% for busines in business%}
+                      <tr
+                        onclick="go_detail(this);"
+                        href="{% url 'detail' busines.id %}"
+                      >
+                        <th scope="col">{{ busines.name }}</th>
+                        <td>{{ busines.categories }}</td>
+                        <td>{{ busines.review_count }}</td>
+                        <td>{{ busines.average_rating }}</td>
+                        <!--
                                                     (0,"New "),
                                                     (1,"Onhold "),
                                                     (2,"In Progress "),
@@ -161,56 +117,254 @@
                                                     (6,"Accepted "),
                                                     (7,"No Rsponse "),
                                             -->
-                                                {% if busines.status == 0 %}
-                                                <td><span class="badge bg-black">New</span></td>
-                                                {% elif busines.status == 1 %}
-                                                <td><span class="badge bg-info">Onhold</span></td>
-                                                {% elif busines.status == 2 %}
-                                                <td><span class="badge bg-info">In Progress</span></td>
-                                                {% elif busines.status == 3 %}
-                                                <td><span class="badge bg-success">Completed</span></td>
-                                                {% elif busines.status == 4 %}
-                                                <td><span class="badge bg-danger">Canceled</span></td>
-                                                {% elif busines.status == 5 %}
-                                                <td><span class="badge bg-danger">Rejected</span></td>
-                                                {% elif busines.status == 6 %}
-                                                <td><span class="badge bg-primary">Accepted</span></td>
-                                                {% elif busines.status == 7 %}
-                                                <td><span class="badge bg-warning">No Response</span></td>
-                                                {% endif %}
+                        {% if busines.status == 0 %}
+                        <td><span class="badge bg-black">New</span></td>
+                        {% elif busines.status == 1 %}
+                        <td><span class="badge bg-info">Onhold</span></td>
+                        {% elif busines.status == 2 %}
+                        <td><span class="badge bg-info">In Progress</span></td>
+                        {% elif busines.status == 3 %}
+                        <td><span class="badge bg-success">Completed</span></td>
+                        {% elif busines.status == 4 %}
+                        <td><span class="badge bg-danger">Canceled</span></td>
+                        {% elif busines.status == 5 %}
+                        <td><span class="badge bg-danger">Rejected</span></td>
+                        {% elif busines.status == 6 %}
+                        <td><span class="badge bg-primary">Accepted</span></td>
+                        {% elif busines.status == 7 %}
+                        <td>
+                          <span class="badge bg-warning">No Response</span>
+                        </td>
+                        {% endif %}
+                      </tr>
 
+                      {% endfor %}
+                    </tbody>
+                  </table>
 
-                                            </tr>
-
-                                            {% endfor %}
-                                        </tbody>
-                                    </table>
-
-
-
-                                    <div>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
-                    </div>
-                    <!-- End Recent Sales -->
-
-
-
+                  <div></div>
                 </div>
+              </div>
             </div>
-            <!-- End Left side columns -->
-
-
-
+          </div>
+          <!-- End Recent Sales -->
         </div>
-    </section>
+      </div>
+      <!-- End Left side columns -->
 
+      <!-- Right side columns -->
+      <div class="col-lg-4">
+        <!-- Website Traffic -->
+        <div class="card">
+          <div class="card-body pb-0">
+            <h5 class="card-title">Business Status</h5>
 
+            <div
+              id="trafficChart"
+              style="min-height: 400px; user-select: none; position: relative"
+              class="echart"
+              _echarts_instance_="ec_1664230250051"
+            >
+              <div
+                style="
+                  position: relative;
+                  width: 478px;
+                  height: 400px;
+                  padding: 0px;
+                  margin: 0px;
+                  border-width: 0px;
+                  cursor: default;
+                "
+              >
+                <canvas
+                  style="
+                    position: absolute;
+                    left: 0px;
+                    top: 0px;
+                    width: 478px;
+                    height: 400px;
+                    user-select: none;
+                    padding: 0px;
+                    margin: 0px;
+                    border-width: 0px;
+                  "
+                  data-zr-dom-id="zr_0"
+                  width="478"
+                  height="400"
+                ></canvas>
+                <div
+                  style="
+                    position: absolute !important;
+                    visibility: hidden !important;
+                    padding: 0px !important;
+                    margin: 0px !important;
+                    border-width: 0px !important;
+                    user-select: none !important;
+                    width: 0px !important;
+                    height: 0px !important;
+                    inset: 0px auto auto 0px !important;
+                  "
+                ></div>
+                <div
+                  style="
+                    position: absolute !important;
+                    visibility: hidden !important;
+                    padding: 0px !important;
+                    margin: 0px !important;
+                    border-width: 0px !important;
+                    user-select: none !important;
+                    width: 0px !important;
+                    height: 0px !important;
+                    inset: 0px 0px auto auto !important;
+                  "
+                ></div>
+                <div
+                  style="
+                    position: absolute !important;
+                    visibility: hidden !important;
+                    padding: 0px !important;
+                    margin: 0px !important;
+                    border-width: 0px !important;
+                    user-select: none !important;
+                    width: 0px !important;
+                    height: 0px !important;
+                    inset: auto auto 0px 0px !important;
+                  "
+                ></div>
+                <div
+                  style="
+                    position: absolute !important;
+                    visibility: hidden !important;
+                    padding: 0px !important;
+                    margin: 0px !important;
+                    border-width: 0px !important;
+                    user-select: none !important;
+                    width: 0px !important;
+                    height: 0px !important;
+                    inset: auto 0px 0px auto !important;
+                  "
+                ></div>
+              </div>
+              <div
+                class=""
+                style="
+                  position: absolute;
+                  display: block;
+                  border-style: solid;
+                  white-space: nowrap;
+                  z-index: 9999999;
+                  box-shadow: rgba(0, 0, 0, 0.2) 1px 2px 10px;
+                  transition: opacity 0.2s cubic-bezier(0.23, 1, 0.32, 1) 0s,
+                    visibility 0.2s cubic-bezier(0.23, 1, 0.32, 1) 0s,
+                    transform 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s;
+                  background-color: rgb(255, 255, 255);
+                  border-width: 1px;
+                  border-radius: 4px;
+                  color: rgb(102, 102, 102);
+                  font: 14px / 21px sans-serif;
+                  padding: 10px;
+                  top: 0px;
+                  left: 0px;
+                  transform: translate3d(127px, 188px, 0px);
+                  border-color: rgb(84, 112, 198);
+                  pointer-events: none;
+                  visibility: hidden;
+                  opacity: 0;
+                "
+              >
+                <div style="margin: 0px 0 0; line-height: 1">
+                  <div
+                    style="
+                      font-size: 14px;
+                      color: #666;
+                      font-weight: 400;
+                      line-height: 1;
+                    "
+                  >
+                    Access From
+                  </div>
+                  <div style="margin: 10px 0 0; line-height: 1">
+                    <div style="margin: 0px 0 0; line-height: 1">
+                      <span
+                        style="
+                          display: inline-block;
+                          margin-right: 4px;
+                          border-radius: 10px;
+                          width: 10px;
+                          height: 10px;
+                          background-color: #5470c6;
+                        "
+                      ></span
+                      ><span
+                        style="
+                          font-size: 14px;
+                          color: #666;
+                          font-weight: 400;
+                          margin-left: 2px;
+                        "
+                        >Search Engine</span
+                      >
+                      <span
+                        style="
+                          float: right;
+                          margin-left: 20px;
+                          font-size: 14px;
+                          color: #666;
+                          font-weight: 900;
+                        "
+                        >1,048</span
+                      >
+                      <div style="clear: both"></div>
+                    </div>
+                    <div style="clear: both"></div>
+                  </div>
+                  <div style="clear: both"></div>
+                </div>
+              </div>
+            </div>
 
+            {{ status | safe }}
+          </div>
+        </div>
+        <!-- End Website Traffic -->
+
+        <div class="card">
+          <div class="card-body pd-0">
+            <h5 class="card-title">Recent Activity <span></span></h5>
+
+            <!-- End activity item -->
+
+            <!-- SHow the first 10 logs-->
+            {% load log %} {% get_admin_log 5 as admin_log for_user user %}
+            <!---->
+            {%for entry in admin_log %}
+            <div class="activity p-3">
+              <div class="activity-item d-flex">
+                <div class="activite-label">
+                  <!-- entry.action_time in days timesince -->
+                  <span class="badge bg-primary"
+                    >{{ entry.action_time|timesince }} ago</span
+                  >
+                </div>
+                <i
+                  class="bi bi-circle-fill activity-badge text-success align-self-start"
+                ></i>
+                <div class="activity-content">
+                  <span class="fw-bold text-dark m-2"
+                    >{{ entry.object_repr }}</span
+                  >
+                  <br />
+                  By
+                  <span class="text-primary">{{ entry.user }}</span>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </main>
 <!-- End #main -->
 
