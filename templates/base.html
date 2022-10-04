@@ -1,4 +1,4 @@
-{% load static %} 
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -110,7 +110,15 @@
             <span>Add Business</span>
           </a>
         </li>
-        <!-- End Home Page Nav -->
+        <!-- End Add Business Page Nav -->
+
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="{% url 'contact' %}">
+            <i class="ri-mail-send-line"></i>
+            <span>Contact Business</span>
+          </a>
+        </li>
+        <!-- End Add Business Page Nav -->
 
         <li class="nav-item">
           <a class="nav-link collapsed" href="{% url 'logout' %}">
