@@ -8,6 +8,8 @@ from .models import Busines, Favorite, Contact
 import csv
 import pandas as pd
 import os
+import pywhatkit
+
 
 import json
 # csv_file= os.path.join(os.path.dirname(__file__), 'results.csv')
@@ -256,19 +258,29 @@ def contact(request):
 
     # if  post by clicking on the button Save or send
     if request.method == 'POST':
-        # if  post by clicking on the button Save
-        if request.POST.get('save'):
-            # get the first Contact
-            contact = Contact.objects.filter().first()
-            # update the contact
-            contact.address = request.POST.get('message')
-            contact.save()
-            # redirect to contact page
-            favorites = Favorite.objects.all()
-            nbr_favorite = favorites.count()
-            contact = Contact.objects.filter().first()
-            context = {'title': 'Contact', 'favorites': favorites,
-                       'nbr_favorite': nbr_favorite, 'contact': contact}
-            return render(request, 'contact.html', context)
+        contact = Contact.objects.filter().first()
+
+        # send whatsapp message to favorite business
+        # get the message from the contact
+        message = contact.message
+        # get the phone number from the favorite business
+        favorites = Favorite.objects.all()
+        for favorite in favorites:
+            phone = favorite.busines.phone
+            # if phone start with 0
+            if phone.startswith('0'):
+                # replace 0 by 212
+                phone = phone.replace('0', '+212', 1)
+                print(phone)
+            # send the message
+            pywhatkit.sendwhatmsg_instantly(
+                str(phone), message, 5, tab_close=False)
+
+        # redirect to contact page
+        favorites = Favorite.objects.all()
+        nbr_favorite = favorites.count()
+        context = {'title': 'Contact', 'favorites': favorites,
+                   'nbr_favorite': nbr_favorite, 'contact': contact}
+        return render(request, 'contact.html', context)
         # if  post by clicking on the button send
         # if request.POST.get('send'):

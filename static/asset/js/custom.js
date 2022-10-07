@@ -44,25 +44,25 @@ function go_detail(element) {
 
 
 // =============  Messsage post ================= //
-$('#save').on('click', function (e) {
-    e.preventDefault()
-    const csrf_token = $('input[name=csrfmiddlewaretoken]').val()
-    const contents = $('#message').text()
+// $('#save').on('click', function (e) {
+//     e.preventDefault()
+//     const csrf_token = $('input[name=csrfmiddlewaretoken]').val()
+//     const contents = $('#message').text()
 
-    $.ajaxSetup({
-        beforeSend: function (xhr, settings) {
-            xhr.setRequestHeader('X-CSRFToken', csrf_token)
-        }
-    })
+//     $.ajaxSetup({
+//         beforeSend: function (xhr, settings) {
+//             xhr.setRequestHeader('X-CSRFToken', csrf_token)
+//         }
+//     })
 
-    $.ajax({
-        type: 'post',
-        url: '/contact',
-        data: {
-            contents: contents
-        },
-        success: function (data, status, jqXHR) {
-            console.log('Here you could update your frontend if needed')
-        }
-    })
-})
+//     $.ajax({
+//         type: 'post',
+//         url: '/contact',
+//         data: {
+//             contents: contents
+//         },
+//         success: function (data, status, jqXHR) {
+//             console.log('Here you could update your frontend if needed')
+//         }
+//     })
+// })

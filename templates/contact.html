@@ -50,20 +50,23 @@
             
 
             <!-- Quill Editor Full -->
+            
             <p class="fw-bolder mt-4 text-decoration-underline">Message :</p>
               <!-- mtho post to save message-->
-              <form action=""   method="POST">
-                {% csrf_token %}
+              
 
-                  <div name="message" id="message" class="quill-editor-full">
+                  <div name="message"  id="message" class="border border-secondary p-3">
 
                   {{contact.message | safe}}
                 </div>
                 <div class="text-center mt-4">
-                  <button type="submit" class="btn btn-primary" name="send" value="send"><i class="ri-send-plane-fill"></i> Send</button>
-                  <button type="submit" class="btn btn-outline-primary" name="save" id="save" value="save"><i class="ri-save-3-fill"></i> Save</button>
+                  <button type="submit" class="btn btn-outline-primary" name="send" id="send" value="send"><i class="ri-send-plane-fill"></i> Send</button>
+                  <a href="http://127.0.0.1:8000/admin/Main/contact/1/change/" target="_blank">
+                    <button type="button" class="btn btn-secondary m-2"><i class="bx bxs-edit"></i></button>
+                </a>
                 </div>
-              </form>
+              
+
            
             <!-- End Quill Editor Full -->
 
