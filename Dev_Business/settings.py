@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     # my apps
     'Main',
     'bootstrap5',
+    'ckeditor',
 ]
 
 MIDDLEWARE = [

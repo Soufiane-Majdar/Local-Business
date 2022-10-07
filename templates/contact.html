@@ -1,4 +1,132 @@
 {% extends "base.html" %}{% block content %}
 <!-- ======= Contact Section ======= -->
 
-Contact Section {% endblock %}
+
+<main id="main" class="main">
+
+  <div class="pagetitle">
+    <h1>Contact Business</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+        <li class="breadcrumb-item">Contact Business</li>
+        <li class="breadcrumb-item active">1</li>
+      </ol>
+    </nav>
+  </div><!-- End Page Title -->
+
+  <section class="section">
+    <div class="row">
+      <div class="col-lg-6 profile-overview">
+
+
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Contact Details</h5>
+            <!-- Name Phone  Email Address Website -->
+
+            <div class="row">
+              <div class="col-lg-3 col-md-4 fw-bolder text-primary ">Name : </div>
+              <div class="col-lg-9 col-md-8 text-muted ">{{contact.name}}</div>
+            </div>
+            <div class="row">
+              <div class="col-lg-3 col-md-4 fw-bolder text-primary ">Phone : </div>
+              <div class="col-lg-9 col-md-8 text-muted ">{{contact.phone}}</div>
+            </div>
+            <div class="row">
+              <div class="col-lg-3 col-md-4 fw-bolder text-primary ">Email : </div>
+              <div class="col-lg-9 col-md-8 text-muted ">{{contact.email}}</div>
+            </div>
+            <div class="row">
+              <div class="col-lg-3 col-md-4 fw-bolder text-primary ">Address : </div>
+              <div class="col-lg-9 col-md-8 text-muted ">{{contact.address}}</div>
+            </div>
+            <div class="row">
+              <div class="col-lg-3 col-md-4 fw-bolder text-primary ">Website : </div>
+              <div class="col-lg-9 col-md-8 text-muted ">{{contact.website}}</div>
+            </div>
+          
+     
+            
+
+            <!-- Quill Editor Full -->
+            <p class="fw-bolder mt-4 text-decoration-underline">Message :</p>
+              <!-- mtho post to save message-->
+              <form action=""   method="POST">
+                {% csrf_token %}
+
+                  <div name="message" id="message" class="quill-editor-full">
+
+                  {{contact.message | safe}}
+                </div>
+                <div class="text-center mt-4">
+                  <button type="submit" class="btn btn-primary" name="send" value="send"><i class="ri-send-plane-fill"></i> Send</button>
+                  <button type="submit" class="btn btn-outline-primary" name="save" id="save" value="save"><i class="ri-save-3-fill"></i> Save</button>
+                </div>
+              </form>
+           
+            <!-- End Quill Editor Full -->
+
+       
+
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col-lg-6">
+
+        <div class="card  overflow-auto">
+          <div class="card-body pb-0">
+            <h5 class="card-title">
+              Business  <span>| {{nbr_favorite}}</span>
+            </h5>
+
+            <table class="table  table-hover">
+              <thead>
+                <tr>
+                  <th scope="col">Name</th>
+                  <th scope="col">Statu</th>
+                  <th scope="col">Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for favorite in favorites %}
+                <tr href="{% url 'detail' favorite.busines.id %}">
+                  <th scope="row">
+                    {{ favorite.busines.name }}
+                  </th>
+               
+                  {% if favorite.busines.status == 0 %}
+                  <td><span class="badge bg-black">New</span></td>
+                  {% elif favorite.busines.status == 1 %}
+                  <td><span class="badge bg-info">Onhold</span></td>
+                  {% elif favorite.busines.status == 2 %}
+                  <td><span class="badge bg-info">In Progress</span></td>
+                  {% elif favorite.busines.status == 3 %}
+                  <td><span class="badge bg-success">Completed</span></td>
+                  {% elif favorite.busines.status == 4 %}
+                  <td><span class="badge bg-danger">Canceled</span></td>
+                  {% elif favorite.busines.status == 5 %}
+                  <td><span class="badge bg-danger">Rejected</span></td>
+                  {% elif favorite.busines.status == 6 %}
+                  <td><span class="badge bg-primary">Accepted</span></td>
+                  {% elif favorite.busines.status == 7 %}
+                  <td><span class="badge bg-warning">No Response</span></td>
+                  {% endif %}
+
+                  <td>{{ favorite.date_added }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main><!-- End #main -->
+
+{% endblock %}

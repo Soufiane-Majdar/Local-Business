@@ -1,7 +1,7 @@
 from distutils.log import error
 from multiprocessing import context
 from django.shortcuts import render, redirect, HttpResponseRedirect
-from .models import Busines, Favorite
+from .models import Busines, Favorite, Contact
 
 # import messages
 # Create your views here.
@@ -243,5 +243,32 @@ def contact(request):
     if not request.session.has_key('USER'):
         # redirect to login page
         return redirect('login')
-    context = {'title': 'Contact'}
-    return render(request, 'contact.html', context)
+
+    if request.method == 'GET':
+        favorites = Favorite.objects.all()
+        nbr_favorite = favorites.count()
+
+        # get the first Contact
+        contact = Contact.objects.filter().first()
+        context = {'title': 'Contact', 'favorites': favorites,
+                   'nbr_favorite': nbr_favorite, 'contact': contact}
+        return render(request, 'contact.html', context)
+
+    # if  post by clicking on the button Save or send
+    if request.method == 'POST':
+        # if  post by clicking on the button Save
+        if request.POST.get('save'):
+            # get the first Contact
+            contact = Contact.objects.filter().first()
+            # update the contact
+            contact.address = request.POST.get('message')
+            contact.save()
+            # redirect to contact page
+            favorites = Favorite.objects.all()
+            nbr_favorite = favorites.count()
+            contact = Contact.objects.filter().first()
+            context = {'title': 'Contact', 'favorites': favorites,
+                       'nbr_favorite': nbr_favorite, 'contact': contact}
+            return render(request, 'contact.html', context)
+        # if  post by clicking on the button send
+        # if request.POST.get('send'):
