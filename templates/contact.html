@@ -60,10 +60,14 @@
                   {{contact.message | safe}}
                 </div>
                 <div class="text-center mt-4">
-                  <button type="submit" class="btn btn-outline-primary" name="send" id="send" value="send"><i class="ri-send-plane-fill"></i> Send</button>
-                  <a href="http://127.0.0.1:8000/admin/Main/contact/1/change/" target="_blank">
-                    <button type="button" class="btn btn-secondary m-2"><i class="bx bxs-edit"></i></button>
-                </a>
+                  <form method="Post" action="">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-primary" name="send" id="send" value="send"><i class="ri-send-plane-fill"></i> Send</button>
+                    <a href="http://127.0.0.1:8000/admin/Main/contact/1/change/" target="_blank">
+                      <button type="button" class="btn btn-secondary m-2"><i class="bx bxs-edit"></i></button>
+                  </a>
+                  </form>
+ 
                 </div>
               
 

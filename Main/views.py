@@ -8,8 +8,7 @@ from .models import Busines, Favorite, Contact
 import csv
 import pandas as pd
 import os
-import pywhatkit
-
+import webbrowser
 
 import json
 # csv_file= os.path.join(os.path.dirname(__file__), 'results.csv')
@@ -272,9 +271,21 @@ def contact(request):
                 # replace 0 by 212
                 phone = phone.replace('0', '+212', 1)
                 print(phone)
-            # send the message
-            pywhatkit.sendwhatmsg_instantly(
-                str(phone), message, 5, tab_close=False)
+            # send the message using https://wa.me
+            url = 'https://wa.me/'+phone+'?text='+message
+            print(url)
+            # open the url
+            webbrowser.open(url)
+            # ??????
+            # ??????
+            # ??????
+            # ??????
+            # ??????
+            # ? Install & import webbrowser
+            # ??????
+            # ??????
+            # ??????
+            # ??????
 
         # redirect to contact page
         favorites = Favorite.objects.all()
